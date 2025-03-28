@@ -5,6 +5,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
     id("androidx.navigation.safeargs")
+    id("org.jetbrains.kotlin.kapt")
 }
 
 fun readProperties(propertiesFile: File) = Properties().apply {
@@ -25,12 +26,12 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments["clearPackageData"] = "true"
 
-//        val apikeyProperties = readProperties(file("../apikey.properties"))
-//        buildConfigField(
-//            "String",
-//            "FLICKR_API_KEY",
-//            apikeyProperties["FLICKR_API_KEY"] as String
-//        )
+        val apikeyProperties = readProperties(file("../apikey.properties"))
+        buildConfigField(
+            "String",
+            "FLICKR_API_KEY",
+            apikeyProperties["FLICKR_API_KEY"] as String
+        )
     }
 
     buildTypes {
@@ -57,6 +58,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+    buildFeatures {
+        viewBinding = true
     }
 }
 
